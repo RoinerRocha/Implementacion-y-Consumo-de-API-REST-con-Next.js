@@ -29,7 +29,12 @@ export default function Home() {
 
   const handleEditSuccess = () => {
     setEditingPost(null);
-    fetchPosts();
+  };
+
+  const updatePostLocal = (updatedPost) => {
+    setPosts((prev) =>
+      prev.map((p) => (p.id === updatedPost.id ? updatedPost : p))
+    );
   };
 
   return (
@@ -38,10 +43,15 @@ export default function Home() {
 
       {error && <p className="text-red-500">{error}</p>}
 
-      <PostForm onPostSuccess={fetchPosts} />
+      <PostForm onPostSuccess={(newPost) => setPosts(prev => [newPost, ...prev])} />
 
       {editingPost && (
-        <EditForm post={editingPost} onEditSuccess={handleEditSuccess} onCancel={() => setEditingPost(null)} />
+        <EditForm
+          post={editingPost}
+          onEditSuccess={handleEditSuccess}
+          onEditLocal={updatePostLocal}
+          onCancel={() => setEditingPost(null)}
+        />
       )}
 
       <ul className="space-y-4 mt-6">

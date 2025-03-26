@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function EditForm({ post, onEditSuccess, onCancel }) {
+export default function EditForm({ post, onEditSuccess, onCancel, onEditLocal  }) {
     const [title, setTitle] = useState(post.title);
     const [body, setBody] = useState(post.body);
     const [error, setError] = useState("");
@@ -19,6 +19,7 @@ export default function EditForm({ post, onEditSuccess, onCancel }) {
             alert("✅ Publicación editada con éxito");
 
             if (!res.ok) throw new Error("Error al actualizar");
+            onEditLocal({ ...post, title, body });
             onEditSuccess();
         } catch (err) {
             setError(err.message);

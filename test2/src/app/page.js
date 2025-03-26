@@ -25,7 +25,6 @@ export default function Home() {
   const handleEdit = (post) => setEditingPost(post);
   const handleEditSuccess = () => {
     setEditingPost(null);
-    fetchPosts();
   };
 
   const updatePostLocal = (updatedPost) => {
@@ -37,7 +36,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-4">Publicaciones</h1>
       {error && <p className="text-red-500">{error}</p>}
 
-      <PostForm onPostSuccess={fetchPosts} />
+      <PostForm onPostSuccess={(newPost) => setPosts((prev) => [newPost, ...prev])} />
 
       {editingPost && (
         <EditForm

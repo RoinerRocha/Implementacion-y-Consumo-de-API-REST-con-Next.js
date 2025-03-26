@@ -19,10 +19,13 @@ export default function PostForm({ onPostSuccess }) {
 
             if (!res.ok) throw new Error("Error al crear publicación");
 
+            const newPost = await res.json();
+            newPost.id = Date.now();
+
             setTitle("");
             setBody("");
             setMessage("✅ Publicación creada con éxito");
-            onPostSuccess();
+            onPostSuccess(newPost);
         } catch (err) {
             setMessage(`❌ ${err.message}`);
         }

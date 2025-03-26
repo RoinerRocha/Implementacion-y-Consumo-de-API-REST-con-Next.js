@@ -11,11 +11,12 @@ export default function PostForm({ onPostSuccess }) {
         e.preventDefault();
         setMessage("");
         try {
-            await createPost({ title, body });
+            const newPost = await createPost({ title, body });
+            newPost.id = Date.now();
             setTitle("");
             setBody("");
             setMessage("✅ Publicación creada con éxito");
-            onPostSuccess();
+            onPostSuccess(newPost);
         } catch (err) {
             setMessage(`❌ ${err.message}`);
         }
